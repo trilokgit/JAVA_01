@@ -1,0 +1,9 @@
+// .vscode/settings.json 
+{ 
+  "java.configuration.runtimes": [ 
+    { "name": "JavaSE-21", "path": "C:\\Program Files\\Microsoft\\jdk-21.0.13.21-hotspot", "default": true } 
+  ], 
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.project.sourcePaths": ["src"],
+  "[java]": { "editor.formatOnSave": true } 
+}
