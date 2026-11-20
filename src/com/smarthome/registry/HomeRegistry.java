@@ -32,7 +32,6 @@ public class HomeRegistry {
         homes.put(home.getId(), home);
     }
 
-    /** @throws NoSuchElementException if no home has this ID */
     public Home getHome(UUID homeId) {
         Home home = homes.get(homeId);
         if (home == null) {
@@ -45,7 +44,7 @@ public class HomeRegistry {
         return List.copyOf(homes.values());
     }
 
-    /** @throws NoSuchElementException if no home has this ID */
+  
     public void removeHome(UUID homeId) {
         if (homes.remove(homeId) == null) {
             throw new NoSuchElementException("No home found with ID " + homeId);
@@ -58,10 +57,7 @@ public class HomeRegistry {
 
     // ---------- Rooms ----------
 
-    /**
-     * @throws NoSuchElementException   if the home doesn't exist
-     * @throws IllegalArgumentException if the home already has a room with this name
-     */
+    
     public void addRoom(UUID homeId, Room room) {
         if (room == null) {
             throw new IllegalArgumentException("Room cannot be null");
@@ -82,10 +78,7 @@ public class HomeRegistry {
 
     // ---------- Devices ----------
 
-    /**
-     * @throws NoSuchElementException   if the home doesn't exist, or the room isn't in that home
-     * @throws IllegalArgumentException if any home already has a device with this serial number
-     */
+   
     public void registerDevice(UUID homeId, UUID roomId, Device device) {
         if (device == null) {
             throw new IllegalArgumentException("Device cannot be null");
@@ -100,7 +93,7 @@ public class HomeRegistry {
         room.addDevice(device);
     }
 
-    /** @throws NoSuchElementException if the home doesn't exist */
+    
     public List<Device> listDevices(UUID homeId) {
         List<Device> result = new ArrayList<>();
         for (Room room : getHome(homeId).getRooms()) {
@@ -114,17 +107,12 @@ public class HomeRegistry {
         return locateDevice(serialNumber).map(DeviceLocation::device);
     }
 
-    /** @throws NoSuchElementException if no device has this serial number */
+   
     public Home getHomeOfDevice(String serialNumber) {
         return requireDevice(serialNumber).home();
     }
 
-    /**
-     * Moves a device to another room in the same home.
-     *
-     * @throws NoSuchElementException if no device has this serial number,
-     *                                or the target room isn't in the device's home
-     */
+   
     public void moveDevice(String serialNumber, UUID targetRoomId) {
         DeviceLocation location = requireDevice(serialNumber);
         Room target = location.home().getRoom(targetRoomId);
@@ -137,10 +125,7 @@ public class HomeRegistry {
         target.addDevice(location.device());
     }
 
-    /**
-     * @throws NoSuchElementException if no device has this serial number
-     * @throws IllegalStateException  if the device is already inactive
-     */
+
     public void deactivateDevice(String serialNumber) {
         requireDevice(serialNumber).device().deactivate();
     }
